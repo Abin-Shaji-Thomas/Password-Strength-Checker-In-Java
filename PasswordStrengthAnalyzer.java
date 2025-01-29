@@ -60,11 +60,20 @@ public class PasswordStrengthAnalyzer
             System.out.println("Your password should include at least one special character.");
         }
         
-        // Password Suggestion
-        if (score < 3) 
-        {
-            System.out.println("Consider using a stronger password like: Abc$1234 or Fgh@7890");
-        }
+        // Generate password suggestions dynamically
+    if (score < 3) {
+    String suggestion = "Consider adding: ";
+    if (password.length() < 8) suggestion += "more length, ";
+    if (!password.matches(".*[A-Z].*")) suggestion += "uppercase letters, ";
+    if (!password.matches(".*[a-z].*")) suggestion += "lowercase letters, ";
+    if (!password.matches(".*[0-9].*")) suggestion += "numbers, ";
+    if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) suggestion += "special characters, ";
+    
+    // Trim the last comma and space
+    suggestion = suggestion.substring(0, suggestion.length() - 2) + ".";
+    System.out.println(suggestion);
+    }
+
         
         sc.close();
     }
