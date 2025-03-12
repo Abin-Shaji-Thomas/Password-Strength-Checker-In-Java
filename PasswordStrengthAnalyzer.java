@@ -80,11 +80,36 @@ public class PasswordStrengthAnalyzer {
             }
         }
 
-        if (password.length() >= 8) score++;
-        if (password.matches(".*[A-Z].*")) score++;
-        if (password.matches(".*[a-z].*")) score++;
-        if (password.matches(".*[0-9].*")) score++;
-        if (password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) score++;
+        // Check character types
+        boolean hasUpper = password.matches(".*[A-Z].*");
+        boolean hasLower = password.matches(".*[a-z].*");
+        boolean hasDigit = password.matches(".*[0-9].*");
+        boolean hasSpecial = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
+
+        // Count unique character sets
+        int charSetSize = 0;
+        if (hasUpper) charSetSize += 26;
+        if (hasLower) charSetSize += 26;
+        if (hasDigit) charSetSize += 10;
+        if (hasSpecial) charSetSize += 20; // Approximate special character set size
+
+        // Calculate entropy
+        double entropy = password.length() * (Math.log(charSetSize) / Math.log(2));
+
+        // Assign score based on entropy value
+        if (entropy >= 80) {
+            score = 5;
+        } else if (entropy >= 60) {
+            score = 4;
+        } else if (entropy >= 40) {
+            score = 3;
+        } else if (entropy >= 20) {
+            score = 2;
+        } else {
+            score = 1;
+        }
+
+        System.out.println("🔢 Password Entropy: " + String.format("%.2f", entropy) + " bits");
 
         // Avoid Repeated Characters (More Strict)
         if (password.matches(".*(.)\\1.*")) {
