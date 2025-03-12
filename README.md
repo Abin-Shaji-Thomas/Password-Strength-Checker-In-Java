@@ -19,8 +19,12 @@ The **Password Strength Analyzer** is a Java application designed to evaluate th
 1. Clone the repository or download the code.
 2. Compile the Java files.
 3. Run the `PasswordStrengthAnalyzer` class.
-4. Enter a password when prompted.
-5. Review the strength score, feedback, and suggestions.
+     ```bash
+     javac -d . PasswordStrengthAnalyzer.java
+     java com.passwordanalyzer.PasswordStrengthAnalyzer
+
+5. Enter a password when prompted.
+6. Review the strength score, feedback, and suggestions.
 
 ## How to Contribute
 
