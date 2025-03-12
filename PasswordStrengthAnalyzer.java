@@ -14,7 +14,14 @@ public class PasswordStrengthAnalyzer {
         score = Math.max(0, Math.min(score, 5));
 
         // Strength Meter Visualization
-        String[] meterColors = {"🟥", "🟥", "🟨", "🟩", "🟩"};
+        String[] meterColors = {
+            "\u001B[31m█\u001B[0m", // Red
+            "\u001B[31m█\u001B[0m", // Red
+            "\u001B[33m█\u001B[0m", // Yellow
+            "\u001B[32m█\u001B[0m", // Green
+            "\u001B[32m█\u001B[0m"  // Green
+        };
+        
         String strengthMeter = "";
         for (int i = 0; i < 5; i++) {
             if (i < score) {
