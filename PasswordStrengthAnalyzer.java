@@ -7,52 +7,54 @@ public class PasswordStrengthAnalyzer {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the Password to analyze: ");
         String password = sc.nextLine();
-        
+
         int score = calculatePasswordStrength(password);
 
         // Ensure score is between 0 and 5
         score = Math.max(0, Math.min(score, 5));
 
-        String strengthMeter = "[ ";
-        for (int i = 0; i < score; i++) {
-            strengthMeter += "*";
+        // Strength Meter Visualization
+        String[] meterColors = {"🟥", "🟥", "🟨", "🟩", "🟩"};
+        String strengthMeter = "";
+        for (int i = 0; i < 5; i++) {
+            if (i < score) {
+                strengthMeter += meterColors[i];
+            } else {
+                strengthMeter += "⬜"; // Empty block
+            }
         }
-        for (int i = score; i < 5; i++) {
-            strengthMeter += " ";
-        }
-        strengthMeter += "]";
 
         System.out.println("Password Strength Score: " + score);
         System.out.println("Password Strength Meter: " + strengthMeter);
 
         if (score == 5) {
-            System.out.println("This is a very strong password.");
+            System.out.println("✅ This is a very strong password!");
         } else if (score >= 3) {
-            System.out.println("This is a strong password.");
+            System.out.println("✅ This is a strong password, but could be improved.");
         } else {
-            System.out.println("This is a weak password.");
+            System.out.println("❌ This is a weak password. Consider making it stronger.");
         }
 
-        // Detailed Feedback
+        // Detailed Feedback for Improvements
         if (password.length() < 8) {
-            System.out.println("Your password is too short. It should be at least 8 characters long.");
+            System.out.println("⚠️ Your password is too short! A secure password should be at least 12-16 characters.");
         }
         if (!password.matches(".*[A-Z].*")) {
-            System.out.println("Your password should include at least one uppercase letter.");
+            System.out.println("⚠️ Your password should include at least one uppercase letter.");
         }
         if (!password.matches(".*[a-z].*")) {
-            System.out.println("Your password should include at least one lowercase letter.");
+            System.out.println("⚠️ Your password should include at least one lowercase letter.");
         }
         if (!password.matches(".*[0-9].*")) {
-            System.out.println("Your password should include at least one number.");
+            System.out.println("⚠️ Your password should include at least one number.");
         }
         if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-            System.out.println("Your password should include at least one special character.");
+            System.out.println("⚠️ Your password should include at least one special character.");
         }
 
         // Generate password suggestions dynamically
         if (score < 3) {
-            String suggestion = "Consider adding: ";
+            String suggestion = "🔹 Consider adding: ";
             if (password.length() < 8) suggestion += "more length, ";
             if (!password.matches(".*[A-Z].*")) suggestion += "uppercase letters, ";
             if (!password.matches(".*[a-z].*")) suggestion += "lowercase letters, ";
@@ -73,7 +75,7 @@ public class PasswordStrengthAnalyzer {
         String[] commonPasswords = {"123456", "password", "123456789", "qwerty", "abc123", "12345678", "12345", "admin", "welcome"};
         for (String commonPassword : commonPasswords) {
             if (password.equalsIgnoreCase(commonPassword)) {
-                System.out.println("Your password is too common and easily guessable.");
+                System.out.println("❌ Your password is too common and easily guessable.");
                 return 0;
             }
         }
@@ -84,15 +86,15 @@ public class PasswordStrengthAnalyzer {
         if (password.matches(".*[0-9].*")) score++;
         if (password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) score++;
 
-        // Avoid Repeated Characters
-        if (password.matches(".*(\\w)\\1{2,}.*")) {
-            System.out.println("Your password contains repeated characters, which makes it weaker.");
+        // Avoid Repeated Characters (More Strict)
+        if (password.matches(".*(.)\\1.*")) {
+            System.out.println("⚠️ Your password contains repeated characters, which may make it weaker.");
             score--;
         }
 
         // Check for Common Sequences
         if (password.matches(".*(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def).*")) {
-            System.out.println("Your password contains common sequences, which makes it weaker.");
+            System.out.println("⚠️ Your password contains common sequences, which makes it weaker.");
             score--;
         }
 
