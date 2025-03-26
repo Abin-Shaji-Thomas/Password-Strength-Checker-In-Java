@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class PasswordStrengthAnalyzer {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        System.out.println("Created by Abin Shaji Thomas");
         System.out.print("Enter the Password to analyze: ");
         String password = sc.nextLine();
 
