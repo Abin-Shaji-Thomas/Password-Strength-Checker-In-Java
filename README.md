@@ -28,4 +28,4 @@ The **Password Strength Analyzer** is a Java application designed to evaluate th
 
 ## How to Contribute
 
-Contributions are welcome! If you have suggestions or improvements, please fork the repository and submit a pull request.
+Contributions are welcome! If you have suggestions improvements or issues, please fork the repository and submit a pull request.
